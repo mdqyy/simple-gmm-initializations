@@ -1,0 +1,47 @@
+: initialization description file
+: ---------------------------------
+:
+: Needs file extension '.init'.
+:
+: Indicate comments by leading ':'.
+:
+: A <... range spec> is given by
+: 	minimumValue-maximumValue.stepSize
+: or
+:       int-value-1, int-value-2, ..., int-value-Last
+: A <... fp-type list> is given by
+: 	floating-points-value-1, floating-points-value-2, ..., floating-points-value-Last
+:
+:
+: Uniform, Kmeans++ and Gonzalze initialization can be defined by
+: 	uniform_means2gmm:<seed range spec>
+: 	adaptive_means2gmm:<seed range spec>
+: 	gonzalez2gmm:<seed range spec>
+:
+: Adaptive(alpha) can be defined by
+: 	alternately_adaptivemeans_means2gmm:<alpha fp-type list>:<seed range spec>
+: 
+: Agglomerative(s) can be defined by
+:	sample_avglink_means2gmm:<s fp-type list>:<seed range spec>
+:
+: GonzalezForGMM(s) can be defined by
+: 	gonzalez_forgmm:1:<s fp-type list>:<seed range spec>
+:
+: GonzalezKwedlo(s) can be defined by
+: 	gonzalez_kwedlo:<s fp-type list>:<seed range spec>
+:
+: e.g.,
+
+uniform_means2gmm:1-30.1
+
+adaptive_means2gmm:1-30.1
+
+gonzalez2gmm:1-30.1
+
+sample_avglink_means2gmm:0.1:1-30.1
+
+alternately_adaptivemeans_means2gmm:0.5,0.7,0.9,1:1-30.1
+
+gonzalez_forgmm:1:0.1,1.0:1-30.1
+
+gonzalez_kwedlo:0.1,1.0:1-30.1

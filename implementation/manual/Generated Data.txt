@@ -1,0 +1,69 @@
+
+This file contains a description of the parameters that define our artificial data sets and the generation process.
+For information on how to ...
+* define description files for generated data, see files in the 'descriptors' folder.
+* run the testlab or generate csv's containing these generated data sets, see the 'Getting Started.txt'.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+Parameters
+------------
+
+N		number of data points
+D		dimension
+K		number of clusters used by the intialization/algorithm
+GEN_K		number of clusters used to generate the data
+W		floating point exponent for weight generation
+Separation	separation as defined by dasgupta & schulman
+EW-exp		floating point exponent for generation of minimum eigenvalues
+EW-min		minimum value for min(sqrt(eigenvalue))
+EW-max		minimum value for min(sqrt(eigenvalue))
+EWP-min 	lower bound on (maximum sqrt(eigenvalue))/(maximum sqrt(eigenvalue)) 
+EWP-max 	upper bound on (maximum sqrt(eigenvalue))/(maximum sqrt(eigenvalue))
+ME		measurement error, either 0 (no noise) or UN (10% uniform noise)
+
+
+
+Generation process
+-------------------
+
+  1. weights:
+
+    - set v_i := 2^((i-1)*W) for i=1..K
+    - set w_i := v_i / sum_i{v_i}
+    
+  2. means:
+
+    - each entry is drawn uniformly at random from the interval [0,A]
+    - (finally, the means are scaled as to fit the given separation)
+    
+  3. covariances:
+
+    preliminaries
+	* set v_i := 2^(i*EW_exp) for i=1..K and normalize them by setting v_i := v_i / max_j{v_j}.
+	* denote by uniform(a,b) a value that is drawn uniformly at random from the interval [a,b]
+	
+    for each k=1..K
+    - set "minimal eigenvalue of Sigma_k"  :=  EW-min + v_i * (EW-max - EW-min)
+      i.e. the minimal EWs of the covariances are increasing exponentially in a way that is determined by EW_exp
+    - set "maximal eigenvalue of Sigma_k"  :=  "minimal eigenvalue of Sigma_k" + uniform(EWP_min, EWP_max) * "minimal eigenvalue of Sigma_k "
+    - set lambda_kd = uniform("minimal eigenvalue of Sigma_k", "maximal eigenvalue of Sigma_k") for d=1..D
+    - set Q_k = random orthonormal matrix
+    - set Sigma_k = Q_k^T * diag(lambda_k1..lambda_kD) 
+   
+   
+   
+Hints:
+
+  - EW-exp controls the ratio between the minimum eigenvalues between the different covariances,
+    i.e. how different the sizes of the clusters are (in terms of expansion in space...)
+   
+  - EW-min = EW-max   => all Covariances have the same MINIMAL eigenvalue
+  
+  - EWP-min = EWP_max => all Covariances have the same ratio between maximum and minimum eigenvalue
+  - EWP-min = EWP_max = 1 => all Covariances are **SPHERICAL**
+  
+  - EW-min = EW-max and EWP-min = EWP_max => all Covariances have the same minimum and maximum eigenvalue
+  - EW-min = EW-max and EWP-min = EWP_max = 1 => all Covariances are spherical and share the same eigenvalue, i.e., EW-min
+   

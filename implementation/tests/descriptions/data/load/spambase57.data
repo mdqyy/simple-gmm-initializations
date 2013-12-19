@@ -1,0 +1,6 @@
+: data description file
+: ----------------------
+: comments with leading ':'
+: loaded data sets with 'load:<filename>:<first coordinate>-<last coordinate>.<block length>:<k range specs>(:normalize)'
+
+load:../data/spambase/spambase.csv:1-57.1:2,10,20

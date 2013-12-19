@@ -1,0 +1,64 @@
+
+
+Getting Started: Requirements, Compiling, Running the testlab.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+Requirements
+----------------------------
+
+- Compiler: gcc 4.7.1 (or higher)
+
+- Eigen3
+  * available at http://eigen.tuxfamily.org
+  * download and unzip Eigen3.1.4 (or higher)
+  * copy subfolder "Eigen" somewhere where the compiler can find it, e.g., in /usr/local/include/
+  
+- premake4
+  * available at http://industriousone.com/premake
+  
+    
+Compiling (with gcc)
+----------------------------
+
+- premake4 gmake 
+- cd build
+- make testlab
+
+
+Running testlab
+----------------------------
+
+Call testlab by
+
+	./testlab --mode <mode> --data <datadescriptor> --init <initdescriptor> --algo <algodescriptor> --output <outputpath>
+	
+where
+	<mode> should be one of
+		DEFAULT (default)
+			Runs algorithms and outputs results as .csv-files.
+			Does NOT require storing the artificial data as .csv-files, the datadescription files suffice.
+		GENERATE_CSV
+			Outputs the artificial data sets described by a datadescription file as .csf files.
+			
+	<output>
+		Path where output (results or data) will be stored.
+		
+	<datadescriptor>, <initdescriptor>, <algodescriptor>
+		Descriptor files. 
+		An explanation of these files can be found at
+			descriptors/Data Descriptors.txt
+			descriptors/Algorithm Descriptor.txt
+			descriptors/Initialization Descriptor.txt
+		The descriptor files used for the experiments in the paper can be found at
+			../tests/descriptors
+
+Example:
+
+	./testlab --mode DEFAULT --data tests/descriptions/data/gen/gen_umrc_n10000_k10_elliptical-difficult.data --algo tests/descriptions/em50s3.algo --init tests/descriptions/paper_s30.init --output tests/results
+  
+  
+  
+
+
